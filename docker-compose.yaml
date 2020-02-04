@@ -1,0 +1,92 @@
+version: '3.5'
+services:
+    test-node01-te:
+        container_name: test-node01-te
+        hostname: test-node01-te
+        image: mysql/mysql-server:5.7
+        networks: 
+            cluster-network:
+        expose: 
+            - "3306"
+        env_file: 
+            - ./conf/db.env
+        volumes: 
+            - "./conf/node01/my.cnf:/etc/my.cnf"
+            - "node01:/var/lib/mysql"
+            - "./scripts/master/:/docker-entrypoint-initdb.d"
+
+    test-node02-te:
+        container_name: test-node02-te
+        hostname: test-node02-te
+        image: mysql/mysql-server:5.7
+        networks: 
+            cluster-network:
+        expose: 
+            - "3306"
+        env_file: 
+            - ./conf/db.env
+        volumes: 
+            - "./conf/node02/my.cnf:/etc/my.cnf"
+            - "node02:/var/lib/mysql"
+            - "./scripts/slaves/:/docker-entrypoint-initdb.d"
+            - "./scripts/tools/:/usr/local/bin"
+        depends_on: 
+            - test-node01-te
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=60", "--strict", "--", "/entrypoint.sh", "mysqld"]
+
+    test-node03-pa:
+        container_name: test-node03-pa
+        hostname: test-node03-pa
+        image: mysql/mysql-server:5.7
+        networks: 
+            cluster-network:
+        expose: 
+            - "3306"
+        env_file: 
+            - ./conf/db.env
+        volumes: 
+            - "./conf/node03/my.cnf:/etc/my.cnf"
+            - "node03:/var/lib/mysql"
+            - "./scripts/slaves/:/docker-entrypoint-initdb.d"
+            - "./scripts/tools/:/usr/local/bin"
+        depends_on: 
+            - test-node01-te
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=60", "--strict", "--", "/entrypoint.sh", "mysqld"]
+
+    orchestrator:
+        container_name: orchestrator
+        image: orchestrator
+        networks: 
+            cluster-network:
+        expose:
+            - "3000"
+        ports: 
+            - "3000:3000"            
+        volumes: 
+            - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
+            - "./scripts/tools/:/usr/local/bin"
+        depends_on: 
+            - orc-backend
+        command: ["wait-for-it.sh", "orc-backend:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
+
+    orc-backend:
+        container_name: orc-backend
+        image: mysql/mysql-server:5.7
+        networks: 
+            cluster-network:
+        env_file: 
+            - ./conf/db.env
+        expose:
+            - "3306"
+        volumes: 
+            - "backend:/var/lib/mysql"
+            - "./scripts/orc-backend:/docker-entrypoint-initdb.d"
+        
+networks: 
+    cluster-network:
+        name: clusterDR
+volumes: 
+    node01:
+    node02:
+    node03:
+    backend:
