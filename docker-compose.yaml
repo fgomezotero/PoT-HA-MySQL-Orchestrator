@@ -32,7 +32,7 @@ services:
             - "./scripts/tools/:/usr/local/bin"
         depends_on: 
             - test-node01-te
-        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=60", "--strict", "--", "/entrypoint.sh", "mysqld"]
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh", "mysqld"]
 
     test-node03-pa:
         container_name: test-node03-pa
@@ -51,7 +51,7 @@ services:
             - "./scripts/tools/:/usr/local/bin"
         depends_on: 
             - test-node01-te
-        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=60", "--strict", "--", "/entrypoint.sh", "mysqld"]
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh", "mysqld"]
 
     orchestrator:
         container_name: orchestrator
