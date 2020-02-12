@@ -65,22 +65,7 @@ services:
         volumes: 
             - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
             - "./scripts/tools/:/usr/local/bin"
-        depends_on: 
-            - orc-backend
-        command: ["wait-for-it.sh", "orc-backend:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
-
-    orc-backend:
-        container_name: orc-backend
-        image: mysql/mysql-server:5.7
-        networks: 
-            cluster-network:
-        env_file: 
-            - ./conf/db.env
-        expose:
-            - "3306"
-        volumes: 
-            - "backend:/var/lib/mysql"
-            - "./scripts/orc-backend:/docker-entrypoint-initdb.d"
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
         
 networks: 
     cluster-network:
@@ -89,4 +74,3 @@ volumes:
     node01:
     node02:
     node03:
-    backend:

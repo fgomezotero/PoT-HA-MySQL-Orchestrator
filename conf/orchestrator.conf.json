@@ -1,6 +1,7 @@
 {
   "Debug": true,
   "EnableSyslog": false,
+  "UseSuperReadOnly": false,
   "ListenAddress": ":3000",
   "MySQLTopologyUser": "orc_client_user",
   "MySQLTopologyPassword": "orc_client_password",
@@ -10,17 +11,8 @@
   "MySQLTopologySSLCAFile": "",
   "MySQLTopologySSLSkipVerify": true,
   "MySQLTopologyUseMutualTLS": false,
-  "MySQLOrchestratorHost": "orc-backend",
-  "MySQLOrchestratorPort": 3306,
-  "MySQLOrchestratorDatabase": "orchestrator",
-  "MySQLOrchestratorUser": "orc_server_user",
-  "MySQLOrchestratorPassword": "orc_server_password",
-  "MySQLOrchestratorCredentialsConfigFile": "",
-  "MySQLOrchestratorSSLPrivateKeyFile": "",
-  "MySQLOrchestratorSSLCertFile": "",
-  "MySQLOrchestratorSSLCAFile": "",
-  "MySQLOrchestratorSSLSkipVerify": true,
-  "MySQLOrchestratorUseMutualTLS": false,
+  "BackendDB": "sqlite",
+  "SQLite3DataFile": "/usr/local/orchestrator/orchestrator.sqlite3",
   "MySQLConnectTimeoutSeconds": 1,
   "DefaultInstancePort": 3306,
   "DiscoverByShowSlaveHosts": false,
@@ -103,10 +95,10 @@
   "RecoveryPeriodBlockSeconds": 3600,
   "RecoveryIgnoreHostnameFilters": [],
   "RecoverMasterClusterFilters": [
-    "*"
+    ""
   ],
   "RecoverIntermediateMasterClusterFilters": [
-    "*"
+    ""
   ],
   "OnFailureDetectionProcesses": [
     "echo 'Detected {failureType} on {failureCluster}. Affected replicas: {countSlaves}' >> /tmp/recovery.log"
