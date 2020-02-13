@@ -15,9 +15,9 @@ services:
             - "node01:/var/lib/mysql"
             - "./scripts/master/:/docker-entrypoint-initdb.d"
 
-    test-node02-te:
-        container_name: test-node02-te
-        hostname: test-node02-te
+    test-node02-pa:
+        container_name: test-node02-pa
+        hostname: test-node02-pa
         image: mysql/mysql-server:5.7
         networks: 
             cluster-network:
@@ -34,9 +34,9 @@ services:
             - test-node01-te
         command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh", "mysqld"]
 
-    test-node03-pa:
-        container_name: test-node03-pa
-        hostname: test-node03-pa
+    pot-node01-te:
+        container_name: pot-node01-te
+        hostname: pot-node01-te
         image: mysql/mysql-server:5.7
         networks: 
             cluster-network:
@@ -45,13 +45,28 @@ services:
         env_file: 
             - ./conf/db.env
         volumes: 
-            - "./conf/node03/my.cnf:/etc/my.cnf"
-            - "node03:/var/lib/mysql"
-            - "./scripts/slaves/:/docker-entrypoint-initdb.d"
+            - "./conf/node01/my.cnf:/etc/my.cnf"
+            - "potnode01:/var/lib/mysql"
+            - "./scripts/potmaster/:/docker-entrypoint-initdb.d"
+
+    pot-node02-pa:
+        container_name: pot-node02-pa
+        hostname: pot-node02-pa
+        image: mysql/mysql-server:5.7
+        networks: 
+            cluster-network:
+        expose: 
+            - "3306"
+        env_file: 
+            - ./conf/db.env
+        volumes: 
+            - "./conf/node02/my.cnf:/etc/my.cnf"
+            - "potnode02:/var/lib/mysql"
+            - "./scripts/potslaves/:/docker-entrypoint-initdb.d"
             - "./scripts/tools/:/usr/local/bin"
         depends_on: 
-            - test-node01-te
-        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh", "mysqld"]
+            - pot-node01-te
+        command: ["wait-for-it.sh", "pot-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh", "mysqld"]
 
     orchestrator:
         container_name: orchestrator
@@ -73,4 +88,5 @@ networks:
 volumes: 
     node01:
     node02:
-    node03:
+    potnode01:
+    potnode02:

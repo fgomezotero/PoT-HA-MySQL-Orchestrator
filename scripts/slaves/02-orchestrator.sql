@@ -24,5 +24,5 @@ CREATE TABLE IF NOT EXISTS cluster (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO cluster (anchor, cluster_name, cluster_domain)
-  VALUES (@@hostname, 'PoT', 'PoT')
+  VALUES (@@hostname, 'Test', 'Test')
   ON DUPLICATE KEY UPDATE cluster_name=VALUES(cluster_name), cluster_domain=VALUES(cluster_domain);
