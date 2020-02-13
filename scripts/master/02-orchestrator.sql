@@ -17,12 +17,12 @@ use meta;
 GRANT SELECT ON meta.* TO 'orc_client_user'@'%';
 
 CREATE TABLE IF NOT EXISTS cluster (
-  anchor TINYINT NOT NULL,
+  anchor VARCHAR(128) NOT NULL,
   cluster_name VARCHAR(128) CHARSET ascii NOT NULL DEFAULT '',
   cluster_domain VARCHAR(128) CHARSET ascii NOT NULL DEFAULT '',
   PRIMARY KEY (anchor)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO cluster (anchor, cluster_name, cluster_domain)
-  VALUES (1, 'Test', 'Test')
+  VALUES (@@hostname, 'PoT', 'PoT')
   ON DUPLICATE KEY UPDATE cluster_name=VALUES(cluster_name), cluster_domain=VALUES(cluster_domain);

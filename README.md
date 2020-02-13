@@ -10,3 +10,5 @@ Nos propusimos construir un archivo **docker-compose.yaml** para el armado del a
 * orc-backend
 
 La imagen que utilizamos en el servicio de orchestrator es la construida a partir del Dockerfile oficial de dicho repositorio https://github.com/github/orchestrator
+
+En esta rama de Git nuestro objetivo es configurar un nodo Orchestrator con backend SQLite y sin habilitar el recovery autmático del cluster de PoT

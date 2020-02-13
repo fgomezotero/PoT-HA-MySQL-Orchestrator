@@ -50,8 +50,8 @@
     "127.0.0.1": "test suite"
   },
   "ReplicationLagQuery": "",
-  "DetectClusterAliasQuery": "select ifnull(max(cluster_name), '') as cluster_alias from meta.cluster where anchor=1",
-  "DetectClusterDomainQuery": "select ifnull(max(cluster_domain), '') as cluster_domain from meta.cluster where anchor=1",
+  "DetectClusterAliasQuery": "select ifnull(max(cluster_name), '') as cluster_alias from meta.cluster where anchor=@@hostname",
+  "DetectClusterDomainQuery": "select ifnull(max(cluster_domain), '') as cluster_domain from meta.cluster where anchor=@@hostname",
   "DetectInstanceAliasQuery": "",
   "DetectPromotionRuleQuery": "",
   "DataCenterPattern": "",
