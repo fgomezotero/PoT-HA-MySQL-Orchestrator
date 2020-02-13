@@ -7,7 +7,6 @@ Nos propusimos construir un archivo **docker-compose.yaml** para el armado del a
 * test-node02-te (MySQL Slave)
 * test-node03-pa (MySQL Slave)
 * orchestrator
-* orc-backend
 
 La imagen que utilizamos en el servicio de orchestrator es la construida a partir del Dockerfile oficial de dicho repositorio https://github.com/github/orchestrator
 
