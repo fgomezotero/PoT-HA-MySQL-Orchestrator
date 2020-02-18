@@ -10,7 +10,6 @@ Nos propusimos construir un archivo **docker-compose.yaml** para el armado del a
 * orchestrator2
 * orchestrator3
 * haproxy
-* orchestrator
 
 La imagen que utilizamos en el servicio de orchestrator es la construida a partir del Dockerfile oficial de dicho repositorio https://github.com/github/orchestrator
 
