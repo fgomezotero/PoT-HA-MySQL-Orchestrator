@@ -63,7 +63,7 @@ services:
         ports: 
             - "3001:3000"            
         volumes: 
-            - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
+            - "./conf/node01/orchestrator.conf.json:/etc/orchestrator.conf.json"
             - "./scripts/tools/:/usr/local/bin"
         command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
 
@@ -77,7 +77,7 @@ services:
         ports: 
             - "3002:3000"            
         volumes: 
-            - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
+            - "./conf/node02/orchestrator.conf.json:/etc/orchestrator.conf.json"
             - "./scripts/tools/:/usr/local/bin"
         command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
 
@@ -91,9 +91,22 @@ services:
         ports: 
             - "3003:3000"            
         volumes: 
-            - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
+            - "./conf/node03/orchestrator.conf.json:/etc/orchestrator.conf.json"
             - "./scripts/tools/:/usr/local/bin"
-        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]        
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]    
+
+    haproxy:
+        image: haproxy:1.8
+        depends_on:
+            - orchestrator1
+            - orchestrator2
+            - orchestrator3
+        ports:
+            - 80:80
+        volumes:
+            - "./conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+        networks:
+            cluster-network:
         
 networks: 
     cluster-network:
