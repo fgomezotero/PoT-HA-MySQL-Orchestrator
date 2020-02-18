@@ -53,19 +53,47 @@ services:
             - test-node01-te
         command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh", "mysqld"]
 
-    orchestrator:
-        container_name: orchestrator
+    orchestrator1:
+        container_name: orchestrator1
         image: orchestrator
         networks: 
             cluster-network:
         expose:
             - "3000"
         ports: 
-            - "3000:3000"            
+            - "3001:3000"            
         volumes: 
             - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
             - "./scripts/tools/:/usr/local/bin"
         command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
+
+    orchestrator2:
+        container_name: orchestrator2
+        image: orchestrator
+        networks: 
+            cluster-network:
+        expose:
+            - "3000"
+        ports: 
+            - "3002:3000"            
+        volumes: 
+            - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
+            - "./scripts/tools/:/usr/local/bin"
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]
+
+    orchestrator3:
+        container_name: orchestrator3
+        image: orchestrator
+        networks: 
+            cluster-network:
+        expose:
+            - "3000"
+        ports: 
+            - "3003:3000"            
+        volumes: 
+            - "./conf/orchestrator.conf.json:/etc/orchestrator.conf.json"
+            - "./scripts/tools/:/usr/local/bin"
+        command: ["wait-for-it.sh", "test-node01-te:3306","--timeout=80", "--strict", "--", "/entrypoint.sh"]        
         
 networks: 
     cluster-network:

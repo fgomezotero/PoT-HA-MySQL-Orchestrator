@@ -13,6 +13,15 @@
   "MySQLTopologyUseMutualTLS": false,
   "BackendDB": "sqlite",
   "SQLite3DataFile": "/usr/local/orchestrator/orchestrator.sqlite3",
+  "RaftEnabled": true,
+  "RaftDataDir": "/var/lib/orchestrator",
+  "RaftBind": "${HOSTNAME}",
+  "DefaultRaftPort": 10008,
+  "RaftNodes": [
+    "orchestrator1",
+    "orchestrator2",
+    "orchestrator3"
+  ],
   "MySQLConnectTimeoutSeconds": 1,
   "DefaultInstancePort": 3306,
   "DiscoverByShowSlaveHosts": false,
