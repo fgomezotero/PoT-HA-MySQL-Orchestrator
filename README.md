@@ -6,8 +6,12 @@ Nos propusimos construir un archivo **docker-compose.yaml** para el armado del a
 * test-node01-te (MySQL Master)
 * test-node02-te (MySQL Slave)
 * test-node03-pa (MySQL Slave)
+* orchestrator1
+* orchestrator2
+* orchestrator3
+* haproxy
 * orchestrator
 
 La imagen que utilizamos en el servicio de orchestrator es la construida a partir del Dockerfile oficial de dicho repositorio https://github.com/github/orchestrator
 
-En esta rama de Git nuestro objetivo es configurar un nodo Orchestrator con backend SQLite y sin habilitar el recovery autmático del cluster de PoT
+En esta rama de Git nuestro objetivo es configurar un cluster de 3 nodos Orchestrator con backend SQLite y un proxy HAProxy de balanceador y sin habilitar el recovery autmático del cluster de PoT
