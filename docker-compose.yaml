@@ -55,7 +55,7 @@ services:
 
     orchestrator1:
         container_name: orchestrator1
-        image: orchestrator
+        image: fgomezotero/orchestrator
         networks: 
             cluster-network:
         expose:
@@ -69,7 +69,7 @@ services:
 
     orchestrator2:
         container_name: orchestrator2
-        image: orchestrator
+        image: fgomezotero/orchestrator
         networks: 
             cluster-network:
         expose:
@@ -83,7 +83,7 @@ services:
 
     orchestrator3:
         container_name: orchestrator3
-        image: orchestrator
+        image: fgomezotero/orchestrator
         networks: 
             cluster-network:
         expose:
